@@ -23,20 +23,21 @@ class CategoryController extends Controller
         return view('pages.category.index', compact('categories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('pages.category.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'name' => 'required|max:100',
+        ]);
+
+        Category::create($validate);
+
+        return redirect()->route('category.index')->with('success', 'Category created successfully');
     }
 
     /**
@@ -50,9 +51,11 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
-        //
+        // edit category
+        $category = Category::findOrFail($id);
+        return view('pages.category.edit', compact('category'));
     }
 
     /**
@@ -60,14 +63,27 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        //  update category
+        $validate = $request->validate([
+            'name' => 'required|max:100',
+        ]);
+
+        $category = Category::findOrFail($category->id);
+        $category->update($validate);
+
+        return redirect()->route('category.index')->with('success', 'Category updated successfully');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //
+        // delete category
+        $category = Category::findOrFail($id);
+        $category->delete();
+
+        return redirect()->route('category.index')->with('success', 'Category deleted successfully');
     }
 }

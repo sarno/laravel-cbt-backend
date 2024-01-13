@@ -76,27 +76,35 @@
                                     </div>
                                 @enderror
                             </div>
+
                             <div class="form-group">
                                 <label class="form-label">Category</label>
-                                <div class="selectgroup w-100">
-                                    <label class="selectgroup-item">
-                                        <input type="radio" name="category" value="food" class="selectgroup-input"
-                                            @if ($product->category == 'food') checked @endif>
-                                        <span class="selectgroup-button">Food</span>
-                                    </label>
-                                    <label class="selectgroup-item">
-                                        <input type="radio" name="category" value="drink" class="selectgroup-input"
-                                            @if ($product->category == 'drink') checked @endif>
-                                        <span class="selectgroup-button">Drink</span>
-                                    </label>
-                                    <label class="selectgroup-item">
-                                        <input type="radio" name="category" value="snack" class="selectgroup-input"
-                                            @if ($product->category == 'snack') checked @endif>
-                                        <span class="selectgroup-button">Snack</span>
-                                    </label>
-
-                                </div>
+                                <select class="form-control selectric @error('category_id')
+                                    is-invalid
+                                @enderror"
+                                    name="category_id" id="category_id" >
+                                    <option value="">-- Select Category --</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}"
+                                            {{ $product->category_id == $category->id ? 'selected' : ''}}>{{ $category->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
+
+
+                            <div class="form-group">
+                                <label>Photo Product</label>
+                                <div class="col-sm-9">
+                                    <input type="file" class="form-control" name="image"
+                                        @error('image') is-invalid @enderror>
+                                </div>
+                                @error('image')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
                         </div>
                         <div class="card-footer text-right">
                             <button class="btn btn-primary">Submit</button>
