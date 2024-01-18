@@ -11,20 +11,23 @@ class UserController extends Controller
 {
     //index
     function index(Request $request)  {
-        // $users = User::paginate(5);
+
+        $type_menu = 'layoutmasteronline';
+
         $users = DB::table('users')
         ->when($request->search, function($query) use ($request)  {
-            return  $query->where('name', 'like','%'.$request->search.'%');
+            return  $query->whereRaw('LOWER(name) like ?', ['%' . strtolower($request->search) . '%']);
 
         })
         ->paginate(5);
 
-        return view('pages.user.index', compact('users'));
+        return view('pages.user.index', compact('type_menu','users'));
     }
 
     //create
     function create() {
-        return view('pages.user.create');
+        $type_menu = 'layoutmasteronline';
+        return view('pages.user.create', compact('type_menu'));
     }
 
     //store
@@ -43,8 +46,9 @@ class UserController extends Controller
 
     //edit
     function edit($id)  {
+        $type_menu = 'layoutmasteronline';
         $user = User::findOrFail($id);
-        return view('pages.user.edit', compact('user'));
+        return view('pages.user.edit', compact('type_menu','user'));
     }
 
     //update

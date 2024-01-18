@@ -16,28 +16,26 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Advanced Forms</h1>
+                <h1>Input Produk</h1>
                 <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+                    <div class="breadcrumb-item active"><a href="{{ route('home') }}">Dashboard</a></div>
                     <div class="breadcrumb-item"><a href="#">Forms</a></div>
                     <div class="breadcrumb-item">Product</div>
                 </div>
             </div>
 
             <div class="section-body">
-                <h2 class="section-title">Product</h2>
-
-
+                <h2 class="section-title">Produk</h2>
 
                 <div class="card">
                     <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="card-header">
-                            <h4>Input Text</h4>
+                            <h4>Masukan Data</h4>
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label>Name</label>
+                                <label>Nama Produk</label>
                                 <input type="text"
                                     class="form-control @error('name')
                                 is-invalid
@@ -50,7 +48,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>Price</label>
+                                <label>Harga</label>
                                 <input type="number"
                                     class="form-control @error('price')
                                 is-invalid
@@ -63,7 +61,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>Stock</label>
+                                <label>Persediaan</label>
                                 <input type="number"
                                     class="form-control @error('stock')
                                 is-invalid
@@ -77,13 +75,13 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="form-label">Category</label>
+                                <label class="form-label">Kategori Produk</label>
                                 <select class="form-control selectric @error('category_id')
                                     is-invalid
                                 @enderror"
                                     name="category_id" id="category_id" >
 
-                                    <option value="">-- Select Category --</option>
+                                    <option value="">-- Pilih Kategori --</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}"
                                             {{ old('category_id') == $category->id ? 'selected' : ''}}>{{ $category->name }}</option>
@@ -92,7 +90,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Photo Product</label>
+                                <label>Gambar Produk</label>
                                 <div class="col-sm-9">
                                     <input type="file" class="form-control" name="image"
                                         @error('image') is-invalid @enderror>
@@ -107,7 +105,7 @@
 
                         </div>
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary">Submit</button>
+                            <button class="btn btn-primary">Simpan</button>
                         </div>
                     </form>
                 </div>

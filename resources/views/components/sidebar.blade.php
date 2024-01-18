@@ -1,7 +1,7 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="index.html">ONLINE SHOP SMOGA JAYA</a>
+            <a href="index.html">TOKO SMOGA JAYA</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="index.html">St</a>
@@ -9,32 +9,32 @@
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
             {{-- <li class="nav-item dropdown {{ $type_menu === 'dashboard' ? 'active' : '' }}"> --}}
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown {{ $type_menu === 'dashboard' ? 'active' : '' }}">
                 <a href="#"
                     class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
                 <ul class="dropdown-menu">
-                    <li class='{{ Request::is('dashboard-general-dashboard') ? 'active' : '' }}'>
+                    <li class='{{ Request::is('home') ? 'active' : '' }}'>
                         <a class="nav-link"
-                            href="{{ route('home') }}">General Dashboard</a>
+                            href="{{ route('home') }}">Dashboard Umum</a>
                     </li>
                 </ul>
             </li>
 
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown {{ $type_menu === 'layoutmasteronline' ? 'active' : '' }}">
                 <a href="#"
-                    class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Master</span></a>
+                    class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Master Toko</span></a>
                 <ul class="dropdown-menu">
-                    <li class='{{ Request::is('user.*') ? 'active' : '' }}'>
+                    <li class='{{ Request::is(['user','user/*']) ? 'active' : '' }}'>
                         <a class="nav-link"
                             href="{{ route('user.index') }}">User</a>
                     </li>
-                    <li class='{{ Request::is('category.*') ? 'active' : '' }}'>
+                    <li class='{{ Request::is(['category','category/*']) ? 'active' : '' }}'>
                         <a class="nav-link"
-                            href="{{ route('category.index') }}">Category Product</a>
+                            href="{{ route('category.index') }}">Kategori Produk</a>
                     </li>
-                    <li class='{{ Request::is('product.*') ? 'active' : '' }}'>
+                    <li class='{{ Request::is(['product','product/']) ? 'active' : '' }}'>
                         <a class="nav-link"
-                            href="{{ route('product.index') }}">Product</a>
+                            href="{{ route('product.index') }}">Produk</a>
                     </li>
                 </ul>
             </li>

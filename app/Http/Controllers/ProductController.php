@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -14,16 +15,17 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->search;
+        $type_menu = 'layoutmasteronline';
+
+        $search = Str::lower($request->search);
         $products  = DB::table('products')
-        ->when($search, function ($query) use($search) {
-            return $query->where('name', 'like', '%'. $search.'%' );
+        ->when($request->search, function ($query) use($request) {
+            return $query->whereRaw('LOWER(name) like ?', ['%' . strtolower($request->search) . '%']);
         })
         ->orderBy('created_at','desc')
         ->paginate(5);
 
-
-        return view('pages.product.index', compact('products'));
+        return view('pages.product.index', compact('products','type_menu'));
     }
 
     /**
@@ -31,8 +33,10 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $type_menu = 'layoutmasteronline';
+
         $categories = Category::all();
-        return view('pages.product.create', compact('categories'));
+        return view('pages.product.create', compact('categories','type_menu'));
     }
 
     /**
@@ -73,9 +77,11 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
+        $type_menu = 'layoutmasteronline';
+
         $product = Product::findOrFail($id);
         $categories = Category::all();
-        return view('pages.product.edit', compact('product', 'categories'));
+        return view('pages.product.edit', compact('product', 'categories','type_menu'));
     }
 
     /**

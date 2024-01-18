@@ -13,19 +13,21 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
+        $type_menu = 'layoutmasteronline';
         $categories  = DB::table('categories')
         ->when($request->search, function($query) use ($request)  {
-            return  $query->where('name', 'like','%'.$request->search.'%');
+            return  $query->whereRaw('LOWER(name) like ?', ['%' . strtolower($request->search) . '%']);
 
         })
         ->paginate(5);
 
-        return view('pages.category.index', compact('categories'));
+        return view('pages.category.index', compact('categories', 'type_menu'));
     }
 
     public function create()
     {
-        return view('pages.category.create');
+        $type_menu = 'layoutmasteronline';
+        return view('pages.category.create', compact('type_menu'));
     }
 
 
@@ -53,9 +55,11 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
+        $type_menu = 'layoutmasteronline';
+
         // edit category
         $category = Category::findOrFail($id);
-        return view('pages.category.edit', compact('category'));
+        return view('pages.category.edit', compact('category', 'type_menu'));
     }
 
     /**
