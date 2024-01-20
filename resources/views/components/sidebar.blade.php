@@ -24,10 +24,12 @@
                 <a href="#"
                     class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Master Toko</span></a>
                 <ul class="dropdown-menu">
-                    <li class='{{ Request::is(['user','user/*']) ? 'active' : '' }}'>
-                        <a class="nav-link"
-                            href="{{ route('user.index') }}">User</a>
-                    </li>
+                    @if (Auth::user()->roles == 'ADMIN')
+                        <li class='{{ Request::is(['user','user/*']) ? 'active' : '' }}'>
+                            <a class="nav-link"
+                                href="{{ route('user.index') }}">User</a>
+                        </li>
+                    @endif
                     <li class='{{ Request::is(['category','category/*']) ? 'active' : '' }}'>
                         <a class="nav-link"
                             href="{{ route('category.index') }}">Kategori Produk</a>

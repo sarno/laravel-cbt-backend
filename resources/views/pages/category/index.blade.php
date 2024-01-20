@@ -56,9 +56,9 @@
                                     <table class="table-striped table">
                                         <tr>
 
-                                            <th>Name</th>
-
-                                            <th>Created At</th>
+                                            <th>Kategori</th>
+                                            <th>Dibuat</th>
+                                            <th>Gambar</th>
                                             <th>Action</th>
                                         </tr>
                                         @foreach ($categories as $category)
@@ -68,8 +68,22 @@
                                                 </td>
 
                                                 <td>{{ $category->created_at }}</td>
+                                                <td><img alt="image"
+                                                    @if (!empty($category->image))
+                                                        @php
+                                                            $path = Storage::url('categories/'.$category->image);
+                                                        @endphp
+                                                        src="{{ url($path) }}"
+                                                    @else
+                                                        src="{{ asset('img/avatar/avatar-1.png') }}"
+                                                    @endif
+
+                                                    class="rounded-circle"
+                                                    width="35"
+                                                    data-toggle="tooltip"
+                                                    title="{{ $category->name }}"></td>
                                                 <td>
-                                                    <div class="d-flex justify-content-center">
+                                                    <div class="d-flex justify-content-start">
                                                         <a href='{{ route('category.edit', $category->id) }}'
                                                             class="btn btn-sm btn-info btn-icon">
                                                             <i class="fas fa-edit"></i>

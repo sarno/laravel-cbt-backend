@@ -33,13 +33,31 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
+        //ddd($request->all());
+
+        $filename = null;
+        if ($request->hasFile('image')) {
+            $filename = time() . '.' . $request->image->extension();
+            $request->image->storeAs('public/categories', $filename);
+        }
+
         $validate = $request->validate([
             'name' => 'required|max:100',
+            'description' => 'required|max:100',
         ]);
 
-        Category::create($validate);
+        try {
+            $cate = new Category();
+            $cate->name = $request->name;
+            $cate->description = $request->description;
+            $cate->image = $filename;
+            $cate->save();
 
-        return redirect()->route('category.index')->with('success', 'Category created successfully');
+            return redirect()->route('category.index')->with('Berhasil', 'Kategori berhasil di buat');
+
+        } catch (\Throwable $th) {
+            return redirect()->route('category.index')->with('error', $th);
+        }
     }
 
     /**
@@ -65,17 +83,36 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
+        $category = Category::findOrFail($id);
+
         //  update category
+        if ($request->hasFile('image')) {
+            $filename = time() . '.' . $request->image->extension();
+            $request->image->storeAs('public/categories', $filename);
+            $category->image = $filename;
+        }
+
+
         $validate = $request->validate([
             'name' => 'required|max:100',
         ]);
 
-        $category = Category::findOrFail($category->id);
-        $category->update($validate);
 
-        return redirect()->route('category.index')->with('success', 'Category updated successfully');
+
+        try {
+
+            $category->update([
+                'name' => $request->name,
+                'description' => (int) $request->price,
+            ]);
+
+            return redirect()->route('category.index')->with('Berhasil', 'Kategori berhasil diperbarui');
+
+        } catch (\Throwable $th) {
+            return redirect()->route('category.index')->with('Gagal', $th);
+        }
 
     }
 
@@ -88,6 +125,6 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->delete();
 
-        return redirect()->route('category.index')->with('success', 'Category deleted successfully');
+        return redirect()->route('category.index')->with('Berhasil', 'Kategori berhasil di hapus');
     }
 }

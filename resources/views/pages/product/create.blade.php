@@ -47,6 +47,21 @@
                                     </div>
                                 @enderror
                             </div>
+
+                            <div class="form-group">
+                                <label>Keterangan</label>
+                                <input type="text"
+                                    class="form-control @error('name')
+                                is-invalid
+                            @enderror"
+                                    name="description" >
+                                @error('description')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
                             <div class="form-group">
                                 <label>Harga</label>
                                 <input type="number"

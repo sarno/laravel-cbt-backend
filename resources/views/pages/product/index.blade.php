@@ -56,12 +56,13 @@
                                     <table class="table-striped table">
                                         <tr>
 
-                                            <th>Name</th>
-                                            <th>Category</th>
-                                            <th>Price</th>
-                                            <th>Stock</th>
-                                            <th>Created At</th>
-                                            <th>Action</th>
+                                            <th>Produk</th>
+                                            <th>Kategori</th>
+                                            <th>Harga</th>
+                                            <th>Stok</th>
+                                            <th>Gambar</th>
+                                            <th>Dibuat</th>
+                                            <th>Aksi</th>
                                         </tr>
                                         @foreach ($products as $product)
                                             <tr>
@@ -74,10 +75,24 @@
                                                 </td>
                                                 <td>{{ $product->stock }}
                                                 </td>
+                                                <td><img alt="image"
+                                                    @if (!empty($product->image))
+                                                        @php
+                                                            $path = Storage::url('products/'.$product->image);
+                                                        @endphp
+                                                        src="{{ url($path) }}"
+                                                    @else
+                                                        src="{{ asset('img/avatar/avatar-1.png') }}"
+                                                    @endif
+
+                                                    class="rounded-circle"
+                                                    width="35"
+                                                    data-toggle="tooltip"
+                                                    title="{{ $product->name }}"></td>
 
                                                 <td>{{ $product->created_at }}</td>
                                                 <td>
-                                                    <div class="d-flex justify-content-center">
+                                                    <div class="d-flex justify-content-start">
                                                         <a href='{{ route('product.edit', $product->id) }}'
                                                             class="btn btn-sm btn-info btn-icon">
                                                             <i class="fas fa-edit"></i>

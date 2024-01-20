@@ -25,12 +25,12 @@
             </div>
 
             <div class="section-body">
-                <h2 class="section-title">Category</h2>
+                <h2 class="section-title">Kategori Produk</h2>
 
 
 
                 <div class="card">
-                    <form action="{{ route('category.update', $category) }}" method="POST">
+                    <form action="{{ route('category.update', $category) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-header">
@@ -38,7 +38,7 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label>Name</label>
+                                <label>Kategori</label>
                                 <input type="text"
                                     class="form-control @error('name')
                                 is-invalid
@@ -52,7 +52,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Description</label>
+                                <label>Keterangan</label>
                                 <input type="text"
                                     class="form-control @error('name')
                                 is-invalid
@@ -66,7 +66,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Photo Category</label>
+                                <label>Gambar</label>
                                 <div class="col-sm-9">
                                     <input type="file" class="form-control" name="image"
                                         @error('image') is-invalid @enderror>
@@ -79,7 +79,7 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary">Submit</button>
+                            <button class="btn btn-primary">Simpan</button>
                         </div>
                     </form>
                 </div>
