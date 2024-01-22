@@ -18,10 +18,12 @@ class ProductController extends Controller
         $type_menu = 'layoutmasteronline';
 
         $search = Str::lower($request->search);
-        $products  = DB::table('products')
+        $products  = DB::table('products as a')
+        ->join('categories as b', 'a.category_id', '=', 'b.id')
         ->when($request->search, function ($query) use($request) {
             return $query->whereRaw('LOWER(name) like ?', ['%' . strtolower($request->search) . '%']);
         })
+        ->select('a.*', 'b.name as category_name')
         ->orderBy('created_at','desc')
         ->paginate(5);
 
