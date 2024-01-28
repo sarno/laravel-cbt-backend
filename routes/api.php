@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProductController;
@@ -31,4 +32,11 @@ Route::get('/categories', [CategoryController::class, 'index']);
 
 // products
 Route::get('/products', [ProductController::class, 'index']);
-// Route::get('/products/{id}', [ProductController::class, 'show']);
+
+Route::middleware(['auth:sanctum'])->group(function () {
+     Route::apiResource('/address', AddressController::class);
+    // Route::resource('/address', ProductController::class);
+});
+
+// Route::get('/address', [AddressController::class, 'index'])->middleware('Auth:santum');
+
